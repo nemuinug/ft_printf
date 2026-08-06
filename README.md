@@ -30,10 +30,6 @@ C言語の `printf` を、標準ライブラリの `printf` を使わずに自�
 `printf` は総出力文字数を返す必要があるため、呼び出し側で加算していけば
 全体の文字数が自然に求まります。
 
-設計時に作成した図を同梱しています。
-
-- `ft_printf.drawio.png`
-
 ## 依存
 
 `libft/` に、別課題で自作した [libft](https://github.com/nemuinug/libft_p) を含んでいます。
