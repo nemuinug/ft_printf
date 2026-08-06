@@ -1,0 +1,74 @@
+# ft_printf
+
+C言語の `printf` を、標準ライブラリの `printf` を使わずに自作したものです。
+プログラミングスクール 42Tokyo のカリキュラム課題「ft_printf」として取り組みました。
+
+## 設計図
+
+実装前に処理の振り分けを図にしてから書きました。
+
+![設計図](ft_printf.drawio.png)
+
+## 対応している変換指定子
+
+| 指定子 | 内容 | 実装ファイル |
+|---|---|---|
+| `%c` | 単一の文字 | `put_c.c` |
+| `%s` | 文字列 | `put_s.c` |
+| `%p` | ポインタ（16進） | `put_p.c` |
+| `%d` `%i` | 符号付き10進整数 | `put_di.c` |
+| `%u` | 符号なし10進整数 | `put_u.c` |
+| `%x` | 16進小文字 | `put_x.c` |
+| `%X` | 16進大文字 | `put_x2.c` |
+| `%%` | パーセント記号そのもの | `put_per.c` |
+
+## 設計
+
+変換指定子ごとにファイルを分割しています。
+`ft_printf.c` は書式文字列を走査して `%` を見つけ、次の1文字に応じて対応する関数へ振り分けるだけの役割です。
+
+分岐を1つの関数に詰め込むと、指定子を1つ追加するたびに巨大な関数に手を入れることになります。
+指定子ごとに独立させておけば、追加も修正も他に影響しません。
+
+各出力関数は書き込んだ文字数を返す設計にしています。
+`printf` は総出力文字数を返す必要があるため、呼び出し側で加算していけば
+全体の文字数が自然に求まります。
+
+設計時に作成した図を同梱しています。
+
+- `ft_printf.drawio.png`
+
+## 依存
+
+`libft/` に、別課題で自作した [libft](https://github.com/nemuinug/libft_p) を含んでいます。
+`ft_putchar_fd_2.c` `ft_putstr_fd_2.c` は、文字数を返すよう戻り値を変更した版です。
+
+## ビルド
+
+```bash
+make          # libftprintf.a を生成
+make clean
+make fclean
+make re
+```
+
+## 使い方
+
+```c
+#include "ft_printf.h"
+
+int main(void)
+{
+    int len = ft_printf("%s is %d years old\n", "Alice", 30);
+    ft_printf("printed %d characters\n", len);
+    return (0);
+}
+```
+
+```bash
+cc main.c -L. -lftprintf -o main
+```
+
+## 補足
+
+なお 42Tokyo は退学しています。このリポジトリは在籍時に取り組んだものです。
